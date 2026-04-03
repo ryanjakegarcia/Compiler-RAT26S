@@ -12,9 +12,8 @@
 #include <cstdint>
 
 //using namespace std;
-using u8 = std::uint8_t;
 
-enum class TokenType : u8 {
+enum class TokenType : std::uint8_t {
     IDENTIFIER,
     KEYWORD,
     INTEGER,
@@ -46,7 +45,7 @@ constexpr std::string_view tokenTypeToString(TokenType type) noexcept {
 struct Token {
     TokenType type = TokenType::ERROR;
     std::string lexeme;
-
+    int line = 1;
     std::string_view typeToString() const noexcept {
         return tokenTypeToString(type);
     }
