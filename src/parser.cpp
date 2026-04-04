@@ -29,8 +29,8 @@ void Parser::syntaxError(const std::string& message){
     throw std::runtime_error(
         "Syntax Error (line " + std::to_string(currentToken.line) + "): " +
         message +
-        " Token: " + std::string(currentToken.typeToString()) +
-        " Lexeme: " + currentToken.lexeme
+        ", Found: " + std::string(currentToken.typeToString()) +
+        "(\"" + currentToken.lexeme + "\")"
     );
 }
 
@@ -54,14 +54,14 @@ void Parser::expect(const std::string& expectedLexeme){
     if(currentToken.lexeme == expectedLexeme)
         advance();
     else
-        syntaxError("Expected: " + expectedLexeme + " Found: " + currentToken.lexeme);
+        syntaxError("Expected: " + expectedLexeme);
 }
 
 void Parser::parse(){
     advance();
     rat26s();
     if(currentToken.type != TokenType::END_OF_FILE)
-        syntaxError("Expected EOF ");
+        syntaxError("Expected: EOF ");
     else
         outputFile << "Successfuly parsed file!" << '\n';
 }
@@ -101,7 +101,7 @@ void Parser::function(){
     printProduction("<Function> -> function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>");
     expect("function");
     if(currentToken.type != TokenType::IDENTIFIER){
-        syntaxError("[function] expected identifier, found token=" + std::string(currentToken.typeToString()));
+        syntaxError("Expected: IDENTIFIER ");
     }
 
     advance();
@@ -145,7 +145,7 @@ void Parser::qualifier(){
         advance();
     }
     else{
-        syntaxError("Expected qualifier");
+        syntaxError("Expected: QUALIFIER");
     }
 }
 
@@ -197,13 +197,13 @@ void Parser::ids(){
         }
     }
     else{
-        syntaxError("Expected Identifier");
+        syntaxError("Expected: IDENTIFIER");
     }
 }
 
 void Parser::statementList(){
     if(!isStatement())
-        syntaxError("Expected start of statement list");
+        syntaxError("Expected: { | if | return | write | read | while ");
 
     statement();
 
@@ -246,7 +246,7 @@ void Parser::statement(){
         assign();
     }
     else{
-        syntaxError("Expected statement");
+        syntaxError("Expected: { | if | return | write | read | while ");
     }
 }
 
@@ -266,7 +266,7 @@ void Parser::assign(){
         expect(";");
     }
     else{
-        syntaxError("Expected Identifier");
+        syntaxError("Expected: IDENTIFIER ");
     }
 }
 
@@ -292,7 +292,7 @@ void Parser::ifTail(){
         expect("fi");
     }
     else{
-        syntaxError("Expected 'fi' or 'otherwise'");
+        syntaxError("Expected: fi | otherwise ");
     }
 }
 
@@ -369,7 +369,7 @@ void Parser::relop(){
         expect(">=");
     }
     else{
-        syntaxError("Expected relational operator");
+        syntaxError("Expected: == | != | > | < | <= | >= ");
     }
 }
 
@@ -462,7 +462,7 @@ void Parser::primary(){
         expect(")");
     }
     else{
-        syntaxError("Expected Primary Start");
+        syntaxError("Expected: IDENTIFIER | INTEGER | REAL | true | false | ( ");
     }
 }
 

@@ -7,6 +7,14 @@
 #include <vector>
 
 namespace fs = std::filesystem;
+static const char* kColorRed = "\033[31m";
+static const char* kColorRedBold = "\033[1;31m";
+static const char* kColorGreen = "\033[32m";
+static const char* kColorReset = "\033[0m";
+
+std::string colorText(const std::string& message, const char* color){
+  return std::string(color) + message + kColorReset;
+}
 
 std::vector<fs::path> collectRatFiles(const fs::path& directory) {
   std::vector<fs::path> files;
@@ -49,11 +57,11 @@ int main(int argc, char** argv) {
       Parser parser(lexer, outputPath.string());
       parser.parse();
       ++passed;
-      std::cout << "[PASS] " << inputPath.string() << " parsed as expected -> " << outputPath.string() << "\n";
+      std::cout << colorText("[PASS] ", kColorGreen) << inputPath.string() << " parsed as expected -> " << outputPath.string() << "\n";
     } catch (const std::exception& e) {
       ++failed;
-      std::cout << "[FAIL] " << inputPath.string() << " expected parse success\n";
-      std::cout << "       " << e.what() << "\n";
+      std::cout << colorText("[FAIL] ", kColorRed) << inputPath.string() << " expected parse success\n";
+      std::cout << "       " << colorText(e.what(), kColorRedBold) << "\n";
     }
   }
 
@@ -65,12 +73,12 @@ int main(int argc, char** argv) {
       Lexer lexer(inputPath.string());
       Parser parser(lexer, outputPath.string());
       parser.parse();
-      ++failed;
-      std::cout << "[FAIL] " << inputPath.string() << " expected parse failure, but parsed successfully\n";
-    } catch (const std::exception& e) {
       ++passed;
-      std::cout << "[PASS] " << inputPath.string() << " failed as expected\n";
-      std::cout << "       " << e.what() << "\n";
+      std::cout << colorText("[PASS] ", kColorGreen) << inputPath.string() << " expected parse failure, but parsed successfully\n";
+    } catch (const std::exception& e) {
+      ++failed;
+      std::cout << colorText("[FAIL] ", kColorRed) << inputPath.string() << " failed as expected\n";
+      std::cout << "       " << colorText(e.what(), kColorRedBold) << "\n";
     }
   }
 
