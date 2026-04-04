@@ -1,0 +1,14 @@
+ Token: SEPARATOR Lexeme: @
+<Rat26S> -> @ <Opt Function Definitions> @ <Opt Declaration List> @ <Statement List> @
+ Token: SEPARATOR Lexeme: @
+<Opt Function Definitions> -> <Empty>
+ Token: KEYWORD Lexeme: integer
+<Opt Declaration List> -> <Declaration List>
+<Declaration> -> <Qualifier> <IDs>
+<Qualifier> -> integer | boolean | real
+ Token: IDENTIFIER Lexeme: a
+ Token: SEPARATOR Lexeme: ;
+<IDs> -> <Identifier>
+ Token: SEPARATOR Lexeme: @
+<Declaration List> -> <Declaration> ;
+ Token: SEPARATOR Lexeme: ;
