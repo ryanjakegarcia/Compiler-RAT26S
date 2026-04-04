@@ -47,9 +47,9 @@ Run:
 
 ## Build and Run (Windows)
 
-Build static executable (no MinGW DLL dependencies):
+Build executable:
 ```bash
-x86_64-w64-mingw32-g++ -std=c++17 -O2 -Isrc src/main.cpp src/lexer.cpp src/parser.cpp -static -static-libgcc -static-libstdc++ -o bin/parser_batch.exe
+g++ -std=c++17 -O2 -Isrc src/main.cpp src/lexer.cpp src/parser.cpp -o bin/parser_batch.exe
 ```
 
 Run on Windows:
