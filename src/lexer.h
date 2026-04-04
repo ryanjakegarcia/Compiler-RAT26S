@@ -54,7 +54,7 @@ struct Token {
 class Lexer {
   private:
     std::ifstream sourceFile;
-    char currentChar;
+        char currentChar = '\0';
     int lineNumber = 1;
     std::unordered_set<std::string> keywords = {
         "integer", "if", "otherwise", "fi", "while", 

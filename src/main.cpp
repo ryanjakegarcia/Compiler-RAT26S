@@ -73,11 +73,11 @@ int main(int argc, char** argv) {
       Lexer lexer(inputPath.string());
       Parser parser(lexer, outputPath.string());
       parser.parse();
-      ++passed;
-      std::cout << colorText("[PASS] ", kColorGreen) << inputPath.string() << " expected parse failure, but parsed successfully\n";
-    } catch (const std::exception& e) {
       ++failed;
-      std::cout << colorText("[FAIL] ", kColorRed) << inputPath.string() << " failed as expected\n";
+      std::cout << colorText("[FAIL] ", kColorRed) << inputPath.string() << " expected parse failure, but parsed successfully\n";
+    } catch (const std::exception& e) {
+      ++passed;
+      std::cout << colorText("[PASS] ", kColorGreen) << inputPath.string() << " failed as expected\n";
       std::cout << "       " << colorText(e.what(), kColorRedBold) << "\n";
     }
   }
