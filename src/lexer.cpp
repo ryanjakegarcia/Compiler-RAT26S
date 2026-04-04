@@ -2,9 +2,10 @@
 
 // Private Functions
 void Lexer::nextChar() {
-    if (!sourceFile.get(currentChar)) {
+  if(currentChar == '\n')
+    lineNumber++;
+  if (!sourceFile.get(currentChar))
         currentChar = EOF;
-    }
 };
 
 char Lexer::peek() {
@@ -56,9 +57,9 @@ Lexer::Lexer(std::string filename) {
 
 Token Lexer::getNextToken() {
   skipWhitespaceAndComments();
-
+  const int tokenLine = lineNumber;
   if (currentChar == EOF) {
-    return {TokenType::END_OF_FILE, "EOF"};
+    return {TokenType::END_OF_FILE, "EOF", tokenLine};
   }
 
   // FSM for identifiers and keywords
@@ -69,16 +70,15 @@ Token Lexer::getNextToken() {
       nextChar();
     }
     if (keywords.count(buffer)) {
-      return {TokenType::KEYWORD, buffer};
+      return {TokenType::KEYWORD, buffer, tokenLine};
     }
-    return {TokenType::IDENTIFIER, buffer};
+    return {TokenType::IDENTIFIER, buffer, tokenLine};
   }
 
   // FSM for integers and reals
   if (isdigit(currentChar)) {
     std::string buffer;
     bool isReal = false;
-
     while (isdigit(currentChar)) {
       buffer += currentChar;
       nextChar();
@@ -94,7 +94,7 @@ Token Lexer::getNextToken() {
       }
     }
 
-    return {isReal ? TokenType::REAL : TokenType::INTEGER, buffer};
+    return {isReal ? TokenType::REAL : TokenType::INTEGER, buffer, tokenLine};
   }
 
   // handle separators
@@ -102,7 +102,7 @@ Token Lexer::getNextToken() {
     std::string s(1, currentChar);
     nextChar();
   
-    return {TokenType::SEPARATOR, s};
+    return {TokenType::SEPARATOR, s, tokenLine};
   }
 
   // operator logic
@@ -127,15 +127,15 @@ Token Lexer::getNextToken() {
     } 
     // account for case where just '!' is encountered
     else if (first == '!' && currentChar != '=') {
-      return {TokenType::ERROR, "!"};
+      return {TokenType::ERROR, "!", tokenLine};
     }
   
-    return {TokenType::OPERATOR, op};
+    return {TokenType::OPERATOR, op, tokenLine};
   }
 
   // error handling
   std::string err(1, currentChar);
   nextChar();
   
-  return {TokenType::ERROR, err};
+  return {TokenType::ERROR, err, tokenLine};
 };

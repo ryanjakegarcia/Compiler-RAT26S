@@ -26,7 +26,12 @@ void Parser::printProduction(const std::string& ruleName){
 }
 
 void Parser::syntaxError(const std::string& message){
-    throw std::runtime_error(message + " Token: " + std::string(currentToken.typeToString()) + " Lexeme: " + currentToken.lexeme);
+    throw std::runtime_error(
+        "Syntax Error (line " + std::to_string(currentToken.line) + "): " +
+        message +
+        " Token: " + std::string(currentToken.typeToString()) +
+        " Lexeme: " + currentToken.lexeme
+    );
 }
 
 void Parser::expect(const std::string& expectedLexeme){
@@ -99,5 +104,117 @@ void Parser::optParameterList(){
         printProduction("<Opt Parameter List> -> <Parameter List>");
         parameterList();
     }
+}
+
+void Parser::parameterList(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::parameter(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::qualifier(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::body(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::optDeclarationList(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::declarationList(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::declaration(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::ids(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::statementList(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::statement(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::compound(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::assign(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::ifStatement(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::ifTail(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::returnStatement(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::returnTail(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::print(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::scan(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::whileStatement(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::condition(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::relop(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::expression(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::expressionTail(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::term(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::termTail(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::factor(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::primary(){
+    throw std::runtime_error("Not yet implemented");
+}
+
+void Parser::primaryTail(){
+    throw std::runtime_error("Not yet implemented");
 }
 

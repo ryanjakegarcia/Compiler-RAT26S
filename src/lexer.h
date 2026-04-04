@@ -55,6 +55,7 @@ class Lexer {
   private:
     std::ifstream sourceFile;
     char currentChar;
+    int lineNumber = 1;
     std::unordered_set<std::string> keywords = {
         "integer", "if", "otherwise", "fi", "while", 
         "return", "read", "write", "function", "boolean", "real"
