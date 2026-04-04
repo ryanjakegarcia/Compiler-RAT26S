@@ -34,6 +34,10 @@ void Parser::syntaxError(const std::string& message){
     );
 }
 
+bool Parser::isQualifier(const std::string& lexeme) const {
+    return lexeme == "integer" || lexeme == "boolean" || lexeme == "real";
+}
+
 void Parser::expect(const std::string& expectedLexeme){
     if(currentToken.lexeme == expectedLexeme)
         advance();
@@ -107,35 +111,82 @@ void Parser::optParameterList(){
 }
 
 void Parser::parameterList(){
-    throw std::runtime_error("Not yet implemented");
+    parameter();
+    if(currentToken.lexeme == ","){
+        printProduction("<Parameter List> -> <Parameter> , <Parameter List>");
+        expect(",");
+        parameterList();
+    }
+    else
+        printProduction("<Parameter List> -> <Parameter>");
 }
 
 void Parser::parameter(){
-    throw std::runtime_error("Not yet implemented");
+    printProduction("<Parameter> -> <IDs> <Qualifier>");
+    ids();
+    qualifier();
 }
 
 void Parser::qualifier(){
-    throw std::runtime_error("Not yet implemented");
+    printProduction("<Qualifier> -> integer | boolean | real");
+    if(isQualifier(currentToken.lexeme)){
+        advance();
+    }
+    else{
+        syntaxError("Expected qualifier");
+    }
 }
 
 void Parser::body(){
-    throw std::runtime_error("Not yet implemented");
+    printProduction("<Body> -> { <Statement List> }");
+    expect("{");
+    statementList();
+    expect("}");
 }
 
 void Parser::optDeclarationList(){
-    throw std::runtime_error("Not yet implemented");
+    if(isQualifier(currentToken.lexeme)){
+        printProduction("<Opt Declaration List> -> <Declaration List>");
+        declarationList();
+    }
+    else{
+        printProduction("<Opt Declaration List> -> <Empty>");
+    }
 }
 
 void Parser::declarationList(){
-    throw std::runtime_error("Not yet implemented");
+    declaration();
+    expect(";");
+    if(isQualifier(currentToken.lexeme)){
+        printProduction("<Declaration List> -> <Declaration> ; <Declaration List>");
+        declarationList();
+    }
+    else{
+        printProduction("<Declaration List> -> <Declaration> ;");
+    }
 }
 
 void Parser::declaration(){
-    throw std::runtime_error("Not yet implemented");
+    printProduction("<Declaration> -> <Qualifier> <IDs>");
+    qualifier();
+    ids();
 }
 
 void Parser::ids(){
-    throw std::runtime_error("Not yet implemented");
+    if(currentToken.type == TokenType::IDENTIFIER){
+        advance();
+        if(currentToken.lexeme == ","){
+            printProduction("<IDs> -> <Identifier> , <IDs>");
+            expect(",");
+            ids();
+        }
+        else{
+            printProduction("<IDs> -> <Identifier>");
+        }
+    }
+    else{
+        syntaxError("Expected Identifier");
+    }
 }
 
 void Parser::statementList(){
