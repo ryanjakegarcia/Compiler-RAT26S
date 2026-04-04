@@ -25,9 +25,12 @@ std::vector<fs::path> collectRatFiles(const fs::path& directory) {
   return files;
 }
 
-int main() {
-  std::vector<fs::path> passFiles = collectRatFiles("pass");
-  std::vector<fs::path> failFiles = collectRatFiles("fail");
+int main(int argc, char** argv) {
+  fs::path exePath = fs::absolute(argc > 0 ? fs::path(argv[0]) : fs::path());
+  fs::path repoRoot = exePath.parent_path().parent_path();
+
+  std::vector<fs::path> passFiles = collectRatFiles(repoRoot / "pass");
+  std::vector<fs::path> failFiles = collectRatFiles(repoRoot / "fail");
 
   if (passFiles.empty() && failFiles.empty()) {
     std::cout << "No .rat files found in pass or fail.\n";
