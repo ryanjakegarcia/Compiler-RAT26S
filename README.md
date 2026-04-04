@@ -45,7 +45,7 @@ Run:
 ./bin/parser_batch
 ```
 
-## Build (Windows)
+## Build and Run (Windows)
 
 Build static executable (no MinGW DLL dependencies):
 ```bash
