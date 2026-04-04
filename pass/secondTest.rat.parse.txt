@@ -1,0 +1,178 @@
+ Token: SEPARATOR Lexeme: @
+<Rat26S> -> @ <Opt Function Definitions> @ <Opt Declaration List> @ <Statement List> @
+ Token: KEYWORD Lexeme: function
+<Opt Function Definitions> -> <Function Definitions>
+<Function> -> function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>
+ Token: IDENTIFIER Lexeme: convertx
+ Token: SEPARATOR Lexeme: (
+ Token: IDENTIFIER Lexeme: fahr
+<Opt Parameter List> -> <Parameter List>
+<Parameter> -> <IDs> <Qualifier>
+ Token: KEYWORD Lexeme: integer
+<IDs> -> <Identifier>
+<Qualifier> -> integer | boolean | real
+ Token: SEPARATOR Lexeme: )
+<Parameter List> -> <Parameter>
+ Token: SEPARATOR Lexeme: {
+<Opt Declaration List> -> <Empty>
+<Body> -> { <Statement List> }
+ Token: KEYWORD Lexeme: return
+<Statement> -> <Return>
+<Return> -> return <Return Tail>
+ Token: INTEGER Lexeme: 5
+<Return Tail> -> <Expression> ;
+<Expression> -> <Term> <Expression Tail>
+<Term> -> <Factor> <Term Tail>
+<Factor> -> <Primary>
+<Primary> -> <Integer>
+ Token: OPERATOR Lexeme: *
+<Term Tail> -> * <Factor> <Term Tail>
+ Token: SEPARATOR Lexeme: (
+<Factor> -> <Primary>
+<Primary> -> ( <Expression> )
+ Token: IDENTIFIER Lexeme: fahr
+<Expression> -> <Term> <Expression Tail>
+<Term> -> <Factor> <Term Tail>
+<Factor> -> <Primary>
+<Primary> -> <Identifier> <Primary Tail>
+ Token: OPERATOR Lexeme: -
+<Primary Tail> -> <Empty>
+<Term Tail> -> Empty
+<Expression Tail> -> - <Term> <Expression Tail>
+ Token: INTEGER Lexeme: 32
+<Term> -> <Factor> <Term Tail>
+<Factor> -> <Primary>
+<Primary> -> <Integer>
+ Token: SEPARATOR Lexeme: )
+<Term Tail> -> Empty
+<Expression Tail> -> <Empty>
+ Token: OPERATOR Lexeme: /
+<Term Tail> -> / <Factor> <Term Tail>
+ Token: INTEGER Lexeme: 9
+<Factor> -> <Primary>
+<Primary> -> <Integer>
+ Token: SEPARATOR Lexeme: ;
+<Term Tail> -> Empty
+<Expression Tail> -> <Empty>
+ Token: SEPARATOR Lexeme: }
+<Statement List> -> <Statement>
+ Token: SEPARATOR Lexeme: @
+<Function Definitions> -> <Function>
+ Token: KEYWORD Lexeme: integer
+<Opt Declaration List> -> <Declaration List>
+<Declaration> -> <Qualifier> <IDs>
+<Qualifier> -> integer | boolean | real
+ Token: IDENTIFIER Lexeme: low
+ Token: SEPARATOR Lexeme: ,
+<IDs> -> <Identifier> , <IDs>
+ Token: IDENTIFIER Lexeme: high
+ Token: SEPARATOR Lexeme: ,
+<IDs> -> <Identifier> , <IDs>
+ Token: IDENTIFIER Lexeme: step
+ Token: SEPARATOR Lexeme: ;
+<IDs> -> <Identifier>
+ Token: SEPARATOR Lexeme: @
+<Declaration List> -> <Declaration> ;
+ Token: KEYWORD Lexeme: read
+<Statement> -> <Scan>
+<Scan> -> read ( <IDs> ) ;
+ Token: SEPARATOR Lexeme: (
+ Token: IDENTIFIER Lexeme: low
+ Token: SEPARATOR Lexeme: ,
+<IDs> -> <Identifier> , <IDs>
+ Token: IDENTIFIER Lexeme: high
+ Token: SEPARATOR Lexeme: ,
+<IDs> -> <Identifier> , <IDs>
+ Token: IDENTIFIER Lexeme: step
+ Token: SEPARATOR Lexeme: )
+<IDs> -> <Identifier>
+ Token: SEPARATOR Lexeme: ;
+ Token: KEYWORD Lexeme: while
+<Statement List> -> <Statement> <Statement List>
+<Statement> -> <While>
+<While> -> while ( <Condition> ) <Statement>
+ Token: SEPARATOR Lexeme: (
+ Token: IDENTIFIER Lexeme: low
+<Condition> -> <Expression> <Relop> <Expression>
+<Expression> -> <Term> <Expression Tail>
+<Term> -> <Factor> <Term Tail>
+<Factor> -> <Primary>
+<Primary> -> <Identifier> <Primary Tail>
+ Token: OPERATOR Lexeme: <=
+<Primary Tail> -> <Empty>
+<Term Tail> -> Empty
+<Expression Tail> -> <Empty>
+<Relop> -> == | != | > | < | <= | >=
+ Token: IDENTIFIER Lexeme: high
+<Expression> -> <Term> <Expression Tail>
+<Term> -> <Factor> <Term Tail>
+<Factor> -> <Primary>
+<Primary> -> <Identifier> <Primary Tail>
+ Token: SEPARATOR Lexeme: )
+<Primary Tail> -> <Empty>
+<Term Tail> -> Empty
+<Expression Tail> -> <Empty>
+ Token: SEPARATOR Lexeme: {
+<Statement> -> <Compound>
+<Compound> -> { <Statement List> }
+ Token: KEYWORD Lexeme: write
+<Statement> -> <Print>
+<Print> -> write ( <Expression> ) ;
+ Token: SEPARATOR Lexeme: (
+ Token: IDENTIFIER Lexeme: low
+<Expression> -> <Term> <Expression Tail>
+<Term> -> <Factor> <Term Tail>
+<Factor> -> <Primary>
+<Primary> -> <Identifier> <Primary Tail>
+ Token: SEPARATOR Lexeme: )
+<Primary Tail> -> <Empty>
+<Term Tail> -> Empty
+<Expression Tail> -> <Empty>
+ Token: SEPARATOR Lexeme: ;
+ Token: KEYWORD Lexeme: write
+<Statement List> -> <Statement> <Statement List>
+<Statement> -> <Print>
+<Print> -> write ( <Expression> ) ;
+ Token: SEPARATOR Lexeme: (
+ Token: IDENTIFIER Lexeme: convertx
+<Expression> -> <Term> <Expression Tail>
+<Term> -> <Factor> <Term Tail>
+<Factor> -> <Primary>
+<Primary> -> <Identifier> <Primary Tail>
+ Token: SEPARATOR Lexeme: (
+<Primary Tail> -> ( <IDs> )
+ Token: IDENTIFIER Lexeme: low
+ Token: SEPARATOR Lexeme: )
+<IDs> -> <Identifier>
+ Token: SEPARATOR Lexeme: )
+<Term Tail> -> Empty
+<Expression Tail> -> <Empty>
+ Token: SEPARATOR Lexeme: ;
+ Token: IDENTIFIER Lexeme: low
+<Statement List> -> <Statement> <Statement List>
+<Statement> -> <Assign>
+<Assign> -> <Identifier> = <Expression> ;
+ Token: OPERATOR Lexeme: =
+ Token: IDENTIFIER Lexeme: low
+<Expression> -> <Term> <Expression Tail>
+<Term> -> <Factor> <Term Tail>
+<Factor> -> <Primary>
+<Primary> -> <Identifier> <Primary Tail>
+ Token: OPERATOR Lexeme: +
+<Primary Tail> -> <Empty>
+<Term Tail> -> Empty
+<Expression Tail> -> + <Term> <Expression Tail>
+ Token: IDENTIFIER Lexeme: step
+<Term> -> <Factor> <Term Tail>
+<Factor> -> <Primary>
+<Primary> -> <Identifier> <Primary Tail>
+ Token: SEPARATOR Lexeme: ;
+<Primary Tail> -> <Empty>
+<Term Tail> -> Empty
+<Expression Tail> -> <Empty>
+ Token: SEPARATOR Lexeme: }
+<Statement List> -> <Statement>
+ Token: SEPARATOR Lexeme: @
+<Statement List> -> <Statement>
+ Token: EOF Lexeme: EOF
+Successfuly parsed file!

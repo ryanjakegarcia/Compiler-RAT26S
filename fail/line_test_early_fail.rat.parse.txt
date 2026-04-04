@@ -1,0 +1,4 @@
+ Token: SEPARATOR Lexeme: @
+<Rat26S> -> @ <Opt Function Definitions> @ <Opt Declaration List> @ <Statement List> @
+ Token: IDENTIFIER Lexeme: oops
+<Opt Function Definitions> -> <Empty>

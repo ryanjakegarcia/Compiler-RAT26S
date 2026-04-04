@@ -1,0 +1,71 @@
+ Token: SEPARATOR Lexeme: @
+<Rat26S> -> @ <Opt Function Definitions> @ <Opt Declaration List> @ <Statement List> @
+ Token: SEPARATOR Lexeme: @
+<Opt Function Definitions> -> <Empty>
+ Token: KEYWORD Lexeme: integer
+<Opt Declaration List> -> <Declaration List>
+<Declaration> -> <Qualifier> <IDs>
+<Qualifier> -> integer | boolean | real
+ Token: IDENTIFIER Lexeme: a
+ Token: SEPARATOR Lexeme: ,
+<IDs> -> <Identifier> , <IDs>
+ Token: IDENTIFIER Lexeme: b
+ Token: SEPARATOR Lexeme: ,
+<IDs> -> <Identifier> , <IDs>
+ Token: IDENTIFIER Lexeme: c
+ Token: SEPARATOR Lexeme: ;
+<IDs> -> <Identifier>
+ Token: SEPARATOR Lexeme: @
+<Declaration List> -> <Declaration> ;
+ Token: KEYWORD Lexeme: read
+<Statement> -> <Scan>
+<Scan> -> read ( <IDs> ) ;
+ Token: SEPARATOR Lexeme: (
+ Token: IDENTIFIER Lexeme: a
+ Token: SEPARATOR Lexeme: ,
+<IDs> -> <Identifier> , <IDs>
+ Token: IDENTIFIER Lexeme: b
+ Token: SEPARATOR Lexeme: )
+<IDs> -> <Identifier>
+ Token: SEPARATOR Lexeme: ;
+ Token: IDENTIFIER Lexeme: c
+<Statement List> -> <Statement> <Statement List>
+<Statement> -> <Assign>
+<Assign> -> <Identifier> = <Expression> ;
+ Token: OPERATOR Lexeme: =
+ Token: IDENTIFIER Lexeme: a
+<Expression> -> <Term> <Expression Tail>
+<Term> -> <Factor> <Term Tail>
+<Factor> -> <Primary>
+<Primary> -> <Identifier> <Primary Tail>
+ Token: OPERATOR Lexeme: +
+<Primary Tail> -> <Empty>
+<Term Tail> -> Empty
+<Expression Tail> -> + <Term> <Expression Tail>
+ Token: IDENTIFIER Lexeme: b
+<Term> -> <Factor> <Term Tail>
+<Factor> -> <Primary>
+<Primary> -> <Identifier> <Primary Tail>
+ Token: SEPARATOR Lexeme: ;
+<Primary Tail> -> <Empty>
+<Term Tail> -> Empty
+<Expression Tail> -> <Empty>
+ Token: KEYWORD Lexeme: write
+<Statement List> -> <Statement> <Statement List>
+<Statement> -> <Print>
+<Print> -> write ( <Expression> ) ;
+ Token: SEPARATOR Lexeme: (
+ Token: IDENTIFIER Lexeme: c
+<Expression> -> <Term> <Expression Tail>
+<Term> -> <Factor> <Term Tail>
+<Factor> -> <Primary>
+<Primary> -> <Identifier> <Primary Tail>
+ Token: SEPARATOR Lexeme: )
+<Primary Tail> -> <Empty>
+<Term Tail> -> Empty
+<Expression Tail> -> <Empty>
+ Token: SEPARATOR Lexeme: ;
+ Token: SEPARATOR Lexeme: @
+<Statement List> -> <Statement>
+ Token: EOF Lexeme: EOF
+Successfuly parsed file!

@@ -1,0 +1,23 @@
+@
+function multiply ( val integer ) {
+    return val * 2 ;
+}
+@
+integer limit, current, total, step;
+@
+read(limit, step);
+current = 1;
+total = 0;
+
+while (current <= limit) {
+    total = total + multiply(current);
+    write(current);
+    write(total);
+    current = current + step;
+}
+
+while (total > 0) {
+    total = total - 1;
+    write(total);
+}
+@
