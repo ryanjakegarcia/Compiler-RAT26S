@@ -35,7 +35,19 @@ void Parser::syntaxError(const std::string& message){
 }
 
 bool Parser::isQualifier(const std::string& lexeme) const {
-    return lexeme == "integer" || lexeme == "boolean" || lexeme == "real";
+    return lexeme == "integer" ||
+           lexeme == "boolean" ||
+           lexeme == "real";
+}
+
+bool Parser::isStatement() const {
+    return currentToken.lexeme == "{" ||
+           currentToken.lexeme == "if" ||
+           currentToken.lexeme == "return" ||
+           currentToken.lexeme == "write" ||
+           currentToken.lexeme == "read" ||
+           currentToken.lexeme == "while" ||
+           currentToken.type == TokenType::IDENTIFIER;
 }
 
 void Parser::expect(const std::string& expectedLexeme){
@@ -190,82 +202,278 @@ void Parser::ids(){
 }
 
 void Parser::statementList(){
-    throw std::runtime_error("Not yet implemented");
+    if(!isStatement())
+        syntaxError("Expected start of statement list");
+
+    statement();
+
+    if(isStatement()){
+        printProduction("<Statement List> -> <Statement> <Statement List>");
+        statementList();
+    }
+    else{
+        printProduction("<Statement List> -> <Statement>");
+    }
 }
 
 void Parser::statement(){
-    throw std::runtime_error("Not yet implemented");
+    if(currentToken.lexeme == "{"){
+        printProduction("<Statement> -> <Compound>");
+        compound();
+    }
+    else if(currentToken.lexeme == "if"){
+        printProduction("<Statement> -> <If>");
+        ifStatement();
+    }
+    else if(currentToken.lexeme == "return"){
+        printProduction("<Statement> -> <Return>");
+        returnStatement();
+    }
+    else if(currentToken.lexeme == "write"){
+        printProduction("<Statement> -> <Print>");
+        print();
+    }
+    else if(currentToken.lexeme == "read"){
+        printProduction("<Statement> -> <Scan>");
+        scan();
+    }
+    else if(currentToken.lexeme == "while"){
+        printProduction("<Statement> -> <While>");
+        whileStatement();
+    }
+    else if(currentToken.type == TokenType::IDENTIFIER){
+        printProduction("<Statement> -> <Assign>");
+        assign();
+    }
+    else{
+        syntaxError("Expected statement");
+    }
 }
 
 void Parser::compound(){
-    throw std::runtime_error("Not yet implemented");
+    printProduction("<Compound> -> { <Statement List> }");
+    expect("{");
+    statementList();
+    expect("}");
 }
 
 void Parser::assign(){
-    throw std::runtime_error("Not yet implemented");
+    if(currentToken.type == TokenType::IDENTIFIER){
+        printProduction("<Assign> -> <Identifier> = <Expression> ;");
+        advance();
+        expect("=");
+        expression();
+        expect(";");
+    }
+    else{
+        syntaxError("Expected Identifier");
+    }
 }
 
 void Parser::ifStatement(){
-    throw std::runtime_error("Not yet implemented");
+    printProduction("<If> -> if ( <Condition> ) <Statement> <If Tail>");
+    expect("if");
+    expect("(");
+    condition();
+    expect(")");
+    statement();
+    ifTail();
 }
 
 void Parser::ifTail(){
-    throw std::runtime_error("Not yet implemented");
+    if(currentToken.lexeme == "fi"){
+        printProduction("<If Tail> -> fi");
+        expect("fi");
+    }
+    else if(currentToken.lexeme == "otherwise"){
+        printProduction("<If Tail> -> otherwise <Statement> fi");
+        expect("otherwise");
+        statement();
+        expect("fi");
+    }
+    else{
+        syntaxError("Expected 'fi' or 'otherwise'");
+    }
 }
 
 void Parser::returnStatement(){
-    throw std::runtime_error("Not yet implemented");
+    printProduction("<Return> -> return <Return Tail>");
+    expect("return");
+    returnTail();
 }
 
 void Parser::returnTail(){
-    throw std::runtime_error("Not yet implemented");
+    if(currentToken.lexeme == ";"){
+        printProduction("<Return Tail> -> ;");
+        expect(";");
+    }
+    else{
+        printProduction("<Return Tail> -> <Expression> ;");
+        expression();
+        expect(";");
+    }
 }
 
 void Parser::print(){
-    throw std::runtime_error("Not yet implemented");
+    printProduction("<Print> -> write ( <Expression> ) ;");
+    expect("write");
+    expect("(");
+    expression();
+    expect(")");
+    expect(";");
 }
 
 void Parser::scan(){
-    throw std::runtime_error("Not yet implemented");
+    printProduction("<Scan> -> read ( <IDs> ) ;");
+    expect("read");
+    expect("(");
+    ids();
+    expect(")");
+    expect(";");
 }
 
 void Parser::whileStatement(){
-    throw std::runtime_error("Not yet implemented");
+    printProduction("<While> -> while ( <Condition> ) <Statement>");
+    expect("while");
+    expect("(");
+    condition();
+    expect(")");
+    statement();
 }
 
 void Parser::condition(){
-    throw std::runtime_error("Not yet implemented");
+    printProduction("<Condition> -> <Expression> <Relop> <Expression>");
+    expression();
+    relop();
+    expression();
 }
 
 void Parser::relop(){
-    throw std::runtime_error("Not yet implemented");
+    printProduction("<Relop> -> == | != | > | < | <= | >=");
+    if(currentToken.lexeme == "==") {
+        expect("==");
+    }
+    else if(currentToken.lexeme == "!="){
+        expect("!=");
+    }
+    else if(currentToken.lexeme == ">"){
+        expect(">");
+    }
+    else if(currentToken.lexeme == "<"){
+        expect("<");
+    }
+    else if(currentToken.lexeme == "<="){
+        expect("<=");
+    }
+    else if(currentToken.lexeme == ">="){
+        expect(">=");
+    }
+    else{
+        syntaxError("Expected relational operator");
+    }
 }
 
 void Parser::expression(){
-    throw std::runtime_error("Not yet implemented");
+    printProduction("<Expression> -> <Term> <Expression Tail>");
+    term();
+    expressionTail();
 }
 
 void Parser::expressionTail(){
-    throw std::runtime_error("Not yet implemented");
+    if(currentToken.lexeme == "+"){
+        printProduction("<Expression Tail> -> + <Term> <Expression Tail>");
+        expect("+");
+        term();
+        expressionTail();
+    }
+    else if(currentToken.lexeme == "-"){
+        printProduction("<Expression Tail> -> - <Term> <Expression Tail>");
+        expect("-");
+        term();
+        expressionTail();
+    }
+    else{
+        printProduction("<Expression Tail> -> <Empty>");
+    }
 }
 
 void Parser::term(){
-    throw std::runtime_error("Not yet implemented");
+    printProduction("<Term> -> <Factor> <Term Tail>");
+    factor();
+    termTail();
 }
 
 void Parser::termTail(){
-    throw std::runtime_error("Not yet implemented");
+    if(currentToken.lexeme == "*"){
+        printProduction("<Term Tail> -> * <Factor> <Term Tail>");
+        expect("*");
+        factor();
+        termTail();
+    }
+    else if(currentToken.lexeme == "/"){
+        printProduction("<Term Tail> -> / <Factor> <Term Tail>");
+        expect("/");
+        factor();
+        termTail();
+    }
+    else{
+        printProduction("<Term Tail> -> Empty");
+    }
 }
 
 void Parser::factor(){
-    throw std::runtime_error("Not yet implemented");
+    if(currentToken.lexeme == "-"){
+        printProduction("<Factor> -> - <Primary>");
+        expect("-");
+        primary();
+    }
+    else{
+        printProduction("<Factor> -> <Primary>");
+        primary();
+    }
 }
 
 void Parser::primary(){
-    throw std::runtime_error("Not yet implemented");
+    if(currentToken.type == TokenType::IDENTIFIER){
+        printProduction("<Primary> -> <Identifier> <Primary Tail>");
+        advance();
+        primaryTail();
+    }
+    else if(currentToken.type == TokenType::INTEGER){
+        printProduction("<Primary> -> <Integer>");
+        advance();
+    }
+    else if(currentToken.type == TokenType::REAL){
+        printProduction("<Primary> -> <Real>");
+        advance();
+    }
+    else if(currentToken.lexeme == "true"){
+        printProduction("<Primary> -> true");
+        expect("true");
+    }
+    else if(currentToken.lexeme == "false"){
+        printProduction("<Primary> -> false");
+        expect("false");
+    }
+    else if(currentToken.lexeme == "("){
+        printProduction("<Primary> -> ( <Expression> )");
+        expect("(");
+        expression();
+        expect(")");
+    }
+    else{
+        syntaxError("Expected Primary Start");
+    }
 }
 
 void Parser::primaryTail(){
-    throw std::runtime_error("Not yet implemented");
+    if(currentToken.lexeme == "("){
+        printProduction("<Primary Tail> -> ( <IDs> )");
+        expect("(");
+        ids();
+        expect(")");
+    }
+    else
+        printProduction("<Primary Tail> -> <Empty>");
 }
 

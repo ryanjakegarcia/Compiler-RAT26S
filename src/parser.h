@@ -15,6 +15,7 @@ private:
     void printProduction(const std::string& ruleName);
     void syntaxError(const std::string& message);
     bool isQualifier(const std::string& lexeme) const;
+    bool isStatement() const;
 
     //Grammar rules
     void rat26s();
