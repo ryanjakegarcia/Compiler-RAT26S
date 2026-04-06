@@ -2,8 +2,10 @@
 <Rat26S> -> @ <Opt Function Definitions> @ <Opt Declaration List> @ <Statement List> @
  Token: SEPARATOR Lexeme: @
 <Opt Function Definitions> -> <Empty>
+<Empty> -> ε
  Token: SEPARATOR Lexeme: @
 <Opt Declaration List> -> <Empty>
+<Empty> -> ε
  Token: KEYWORD Lexeme: write
 <Statement> -> <Print>
 <Print> -> write ( <Expression> ) ;
@@ -14,7 +16,8 @@
 <Factor> -> <Primary>
 <Primary> -> <Integer>
  Token: OPERATOR Lexeme: +
-<Term Tail> -> Empty
+<Term Tail> -> <Empty>
+<Empty> -> ε
 <Expression Tail> -> + <Term> <Expression Tail>
  Token: SEPARATOR Lexeme: )
 <Term> -> <Factor> <Term Tail>

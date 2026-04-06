@@ -2,6 +2,7 @@
 <Rat26S> -> @ <Opt Function Definitions> @ <Opt Declaration List> @ <Statement List> @
  Token: SEPARATOR Lexeme: @
 <Opt Function Definitions> -> <Empty>
+<Empty> -> ε
  Token: KEYWORD Lexeme: integer
 <Opt Declaration List> -> <Declaration List>
 <Declaration> -> <Qualifier> <IDs>
@@ -40,7 +41,9 @@
 <Primary> -> <Identifier> <Primary Tail>
  Token: OPERATOR Lexeme: +
 <Primary Tail> -> <Empty>
-<Term Tail> -> Empty
+<Empty> -> ε
+<Term Tail> -> <Empty>
+<Empty> -> ε
 <Expression Tail> -> + <Term> <Expression Tail>
  Token: IDENTIFIER Lexeme: b
 <Term> -> <Factor> <Term Tail>
@@ -48,8 +51,11 @@
 <Primary> -> <Identifier> <Primary Tail>
  Token: SEPARATOR Lexeme: ;
 <Primary Tail> -> <Empty>
-<Term Tail> -> Empty
+<Empty> -> ε
+<Term Tail> -> <Empty>
+<Empty> -> ε
 <Expression Tail> -> <Empty>
+<Empty> -> ε
  Token: KEYWORD Lexeme: write
 <Statement List> -> <Statement> <Statement List>
 <Statement> -> <Print>
@@ -62,8 +68,11 @@
 <Primary> -> <Identifier> <Primary Tail>
  Token: SEPARATOR Lexeme: )
 <Primary Tail> -> <Empty>
-<Term Tail> -> Empty
+<Empty> -> ε
+<Term Tail> -> <Empty>
+<Empty> -> ε
 <Expression Tail> -> <Empty>
+<Empty> -> ε
  Token: SEPARATOR Lexeme: ;
  Token: SEPARATOR Lexeme: @
 <Statement List> -> <Statement>

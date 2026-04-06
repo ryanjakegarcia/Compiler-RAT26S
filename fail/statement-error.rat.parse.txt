@@ -2,6 +2,7 @@
 <Rat26S> -> @ <Opt Function Definitions> @ <Opt Declaration List> @ <Statement List> @
  Token: SEPARATOR Lexeme: @
 <Opt Function Definitions> -> <Empty>
+<Empty> -> ε
  Token: KEYWORD Lexeme: integer
 <Opt Declaration List> -> <Declaration List>
 <Declaration> -> <Qualifier> <IDs>
@@ -23,8 +24,11 @@
 <Primary> -> <Identifier> <Primary Tail>
  Token: OPERATOR Lexeme: ==
 <Primary Tail> -> <Empty>
-<Term Tail> -> Empty
+<Empty> -> ε
+<Term Tail> -> <Empty>
+<Empty> -> ε
 <Expression Tail> -> <Empty>
+<Empty> -> ε
 <Relop> -> == | != | > | < | <= | >=
  Token: IDENTIFIER Lexeme: a
 <Expression> -> <Term> <Expression Tail>
@@ -33,6 +37,9 @@
 <Primary> -> <Identifier> <Primary Tail>
  Token: SEPARATOR Lexeme: )
 <Primary Tail> -> <Empty>
-<Term Tail> -> Empty
+<Empty> -> ε
+<Term Tail> -> <Empty>
+<Empty> -> ε
 <Expression Tail> -> <Empty>
+<Empty> -> ε
  Token: SEPARATOR Lexeme: ;

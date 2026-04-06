@@ -2,6 +2,7 @@
 <Rat26S> -> @ <Opt Function Definitions> @ <Opt Declaration List> @ <Statement List> @
  Token: SEPARATOR Lexeme: @
 <Opt Function Definitions> -> <Empty>
+<Empty> -> ε
  Token: KEYWORD Lexeme: integer
 <Opt Declaration List> -> <Declaration List>
 <Declaration> -> <Qualifier> <IDs>

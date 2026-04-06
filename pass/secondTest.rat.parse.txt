@@ -15,6 +15,7 @@
 <Parameter List> -> <Parameter>
  Token: SEPARATOR Lexeme: {
 <Opt Declaration List> -> <Empty>
+<Empty> -> ε
 <Body> -> { <Statement List> }
  Token: KEYWORD Lexeme: return
 <Statement> -> <Return>
@@ -37,23 +38,29 @@
 <Primary> -> <Identifier> <Primary Tail>
  Token: OPERATOR Lexeme: -
 <Primary Tail> -> <Empty>
-<Term Tail> -> Empty
+<Empty> -> ε
+<Term Tail> -> <Empty>
+<Empty> -> ε
 <Expression Tail> -> - <Term> <Expression Tail>
  Token: INTEGER Lexeme: 32
 <Term> -> <Factor> <Term Tail>
 <Factor> -> <Primary>
 <Primary> -> <Integer>
  Token: SEPARATOR Lexeme: )
-<Term Tail> -> Empty
+<Term Tail> -> <Empty>
+<Empty> -> ε
 <Expression Tail> -> <Empty>
+<Empty> -> ε
  Token: OPERATOR Lexeme: /
 <Term Tail> -> / <Factor> <Term Tail>
  Token: INTEGER Lexeme: 9
 <Factor> -> <Primary>
 <Primary> -> <Integer>
  Token: SEPARATOR Lexeme: ;
-<Term Tail> -> Empty
+<Term Tail> -> <Empty>
+<Empty> -> ε
 <Expression Tail> -> <Empty>
+<Empty> -> ε
  Token: SEPARATOR Lexeme: }
 <Statement List> -> <Statement>
  Token: SEPARATOR Lexeme: @
@@ -100,8 +107,11 @@
 <Primary> -> <Identifier> <Primary Tail>
  Token: OPERATOR Lexeme: <=
 <Primary Tail> -> <Empty>
-<Term Tail> -> Empty
+<Empty> -> ε
+<Term Tail> -> <Empty>
+<Empty> -> ε
 <Expression Tail> -> <Empty>
+<Empty> -> ε
 <Relop> -> == | != | > | < | <= | >=
  Token: IDENTIFIER Lexeme: high
 <Expression> -> <Term> <Expression Tail>
@@ -110,8 +120,11 @@
 <Primary> -> <Identifier> <Primary Tail>
  Token: SEPARATOR Lexeme: )
 <Primary Tail> -> <Empty>
-<Term Tail> -> Empty
+<Empty> -> ε
+<Term Tail> -> <Empty>
+<Empty> -> ε
 <Expression Tail> -> <Empty>
+<Empty> -> ε
  Token: SEPARATOR Lexeme: {
 <Statement> -> <Compound>
 <Compound> -> { <Statement List> }
@@ -126,8 +139,11 @@
 <Primary> -> <Identifier> <Primary Tail>
  Token: SEPARATOR Lexeme: )
 <Primary Tail> -> <Empty>
-<Term Tail> -> Empty
+<Empty> -> ε
+<Term Tail> -> <Empty>
+<Empty> -> ε
 <Expression Tail> -> <Empty>
+<Empty> -> ε
  Token: SEPARATOR Lexeme: ;
  Token: KEYWORD Lexeme: write
 <Statement List> -> <Statement> <Statement List>
@@ -145,8 +161,10 @@
  Token: SEPARATOR Lexeme: )
 <IDs> -> <Identifier>
  Token: SEPARATOR Lexeme: )
-<Term Tail> -> Empty
+<Term Tail> -> <Empty>
+<Empty> -> ε
 <Expression Tail> -> <Empty>
+<Empty> -> ε
  Token: SEPARATOR Lexeme: ;
  Token: IDENTIFIER Lexeme: low
 <Statement List> -> <Statement> <Statement List>
@@ -160,7 +178,9 @@
 <Primary> -> <Identifier> <Primary Tail>
  Token: OPERATOR Lexeme: +
 <Primary Tail> -> <Empty>
-<Term Tail> -> Empty
+<Empty> -> ε
+<Term Tail> -> <Empty>
+<Empty> -> ε
 <Expression Tail> -> + <Term> <Expression Tail>
  Token: IDENTIFIER Lexeme: step
 <Term> -> <Factor> <Term Tail>
@@ -168,8 +188,11 @@
 <Primary> -> <Identifier> <Primary Tail>
  Token: SEPARATOR Lexeme: ;
 <Primary Tail> -> <Empty>
-<Term Tail> -> Empty
+<Empty> -> ε
+<Term Tail> -> <Empty>
+<Empty> -> ε
 <Expression Tail> -> <Empty>
+<Empty> -> ε
  Token: SEPARATOR Lexeme: }
 <Statement List> -> <Statement>
  Token: SEPARATOR Lexeme: @
