@@ -84,6 +84,7 @@ void Parser::optFunctionDefinitions(){
     }
     else{
         printProduction("<Opt Function Definitions> -> <Empty>");
+        empty();
     }
 }
 
@@ -115,6 +116,7 @@ void Parser::function(){
 void Parser::optParameterList(){
     if(currentToken.lexeme == ")"){
         printProduction("<Opt Parameter List> -> <Empty>");
+        empty();
     }
     else{
         printProduction("<Opt Parameter List> -> <Parameter List>");
@@ -163,6 +165,7 @@ void Parser::optDeclarationList(){
     }
     else{
         printProduction("<Opt Declaration List> -> <Empty>");
+        empty();
     }
 }
 
@@ -394,6 +397,7 @@ void Parser::expressionTail(){
     }
     else{
         printProduction("<Expression Tail> -> <Empty>");
+        empty();
     }
 }
 
@@ -417,7 +421,8 @@ void Parser::termTail(){
         termTail();
     }
     else{
-        printProduction("<Term Tail> -> Empty");
+        printProduction("<Term Tail> -> <Empty>");
+        empty();
     }
 }
 
@@ -473,7 +478,12 @@ void Parser::primaryTail(){
         ids();
         expect(")");
     }
-    else
+    else{
         printProduction("<Primary Tail> -> <Empty>");
+        empty();
+    }
 }
 
+void Parser::empty(){
+    printProduction("<Empty> -> \u03B5");
+}

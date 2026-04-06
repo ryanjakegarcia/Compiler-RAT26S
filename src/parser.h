@@ -23,7 +23,7 @@ private:
     void functionDefinitions();
     void function();
     void optParameterList();
-    void parameterList(); //here
+    void parameterList();
     void parameter();
     void qualifier();
     void body();
@@ -51,6 +51,7 @@ private:
     void factor();
     void primary();
     void primaryTail();
+    void empty();
 
 public:
     Parser(Lexer& lex, const std::string& outputFilename);
