@@ -101,5 +101,5 @@ R30. <Term Tail> ::= * <Factor> <Term Tail> | / <Factor> <Term Tail> | <Empty>
 R31. <Factor> ::= - <Primary> | <Primary>
 R32. <Primary> ::= <Identifier> <Primary Tail> | <Integer> | ( <Expression> ) | <Real> | true | false
 R33. <Primary Tail> ::= <Empty> | ( <IDs> )
-R34. <Empty> ::= Epsilon
+R34. <Empty> ::= ε
 ```
